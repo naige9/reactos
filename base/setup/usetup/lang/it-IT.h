@@ -1335,6 +1335,37 @@ static MUI_ENTRY itITFormatPartitionEntries[] =
     }
 };
 
+static MUI_ENTRY itITCheckFSEntries[] =
+{
+    {
+        4,
+        3,
+        " Installazione di ReactOS " KERNEL_VERSION_STR " ",
+        TEXT_STYLE_UNDERLINE,
+        TEXT_ID_STATIC
+    },
+    {
+        6,
+        8,
+        "Setup sta controllando la partizione selezionata.",
+        TEXT_STYLE_NORMAL,
+        TEXT_ID_STATIC
+    },
+    {
+        0,
+        0,
+        "Attendere...",
+        TEXT_TYPE_STATUS | TEXT_PADDING_BIG,
+        TEXT_ID_STATIC
+    },
+    {
+        0,
+        0,
+        NULL,
+        0
+    }
+};
+
 static MUI_ENTRY itITInstallDirectoryEntries[] =
 {
     {
@@ -2107,6 +2138,10 @@ MUI_PAGE itITPages[] =
         itITFormatPartitionEntries
     },
     {
+        CHECK_FILE_SYSTEM_PAGE,
+        itITCheckFSEntries
+    },
+    {
         DELETE_PARTITION_PAGE,
         itITDeletePartitionEntries
     },
@@ -2190,8 +2225,6 @@ MUI_STRING itITStrings[] =
     "La nuova partizione non \x8A stata ancora formattata."},
     {STRING_INSTALLONPART,
     "Il setup installer\x85 ReactOS sulla partitione"},
-    {STRING_CHECKINGPART,
-    "Setup sta controllando la partizione selezionata."},
     {STRING_CONTINUE,
     "INVIO = Continua"},
     {STRING_QUITCONTINUE,
@@ -2243,31 +2276,21 @@ MUI_STRING itITStrings[] =
     {STRING_KEEPFORMAT,
     " Mantieni il file system attuale (nessuna modifica) "},
     {STRING_HDINFOPARTCREATE_1,
-    "%I64u %s  Harddisk %lu  (Port=%hu, Bus=%hu, Id=%hu) su %wZ [%s]."},
-    {STRING_HDINFOPARTCREATE_2,
-    "%I64u %s  Harddisk %lu  (Port=%hu, Bus=%hu, Id=%hu) [%s]."},
-    {STRING_HDDINFOUNK2,
-    "   %c%c  Tipo 0x%02X    %I64u %s"},
+    "%s."},
     {STRING_HDINFOPARTDELETE_1,
-    "su %I64u %s  Harddisk %lu  (Port=%hu, Bus=%hu, Id=%hu) su %wZ [%s]."},
-    {STRING_HDINFOPARTDELETE_2,
-    "su %I64u %s  Harddisk %lu  (Port=%hu, Bus=%hu, Id=%hu) [%s]."},
-    {STRING_HDINFOPARTZEROED_1,
-    "Harddisk %lu (%I64u %s), Port=%hu, Bus=%hu, Id=%hu (%wZ) [%s]."},
-    {STRING_HDDINFOUNK4,
-    "%c%c  Tipo 0x%02X    %I64u %s"},
-    {STRING_HDINFOPARTEXISTS_1,
-    "su Harddisk %lu (%I64u %s), Port=%hu, Bus=%hu, Id=%hu (%wZ) [%s]."},
-    {STRING_HDDINFOUNK5,
-    "%c%c %c %sTipo %-3u%s                       %6lu %s"},
-    {STRING_HDINFOPARTSELECT_1,
-    "%6lu %s  Harddisk %lu  (Port=%hu, Bus=%hu, Id=%hu) su %wZ [%s]"},
-    {STRING_HDINFOPARTSELECT_2,
-    "%6lu %s  Harddisk %lu  (Port=%hu, Bus=%hu, Id=%hu) [%s]"},
+    "su %s."},
+    {STRING_PARTTYPE,
+    "Tipo 0x%02x"},
+    {STRING_HDDINFO_1,
+    // "Harddisk %lu (%I64u %s), Port=%hu, Bus=%hu, Id=%hu (%wZ) [%s]"
+    "%I64u %s Harddisk %lu (Port=%hu, Bus=%hu, Id=%hu) su %wZ [%s]"},
+    {STRING_HDDINFO_2,
+    // "Harddisk %lu (%I64u %s), Port=%hu, Bus=%hu, Id=%hu [%s]"
+    "%I64u %s Harddisk %lu (Port=%hu, Bus=%hu, Id=%hu) [%s]"},
     {STRING_NEWPARTITION,
     "Setup ha creato una nuova partizione su"},
     {STRING_UNPSPACE,
-    "    %sSpazio non partizionato%s             %6lu %s"},
+    "Spazio non partizionato"},
     {STRING_MAXSIZE,
     "MB (max. %lu MB)"},
     {STRING_EXTENDED_PARTITION,

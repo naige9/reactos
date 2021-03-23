@@ -1346,6 +1346,37 @@ static MUI_ENTRY ptPTFormatPartitionEntries[] =
     }
 };
 
+static MUI_ENTRY ptPTCheckFSEntries[] =
+{
+    {
+        4,
+        3,
+        " Instala\207\306o do ReactOS " KERNEL_VERSION_STR " ",
+        TEXT_STYLE_UNDERLINE,
+        TEXT_ID_STATIC
+    },
+    {
+        6,
+        8,
+        "O instalador est\240 a verificar a parti\207\306o seleccionada.",
+        TEXT_STYLE_NORMAL,
+        TEXT_ID_STATIC
+    },
+    {
+        0,
+        0,
+        "Por favor, aguarde...",
+        TEXT_TYPE_STATUS | TEXT_PADDING_BIG,
+        TEXT_ID_STATIC
+    },
+    {
+        0,
+        0,
+        NULL,
+        0
+    }
+};
+
 static MUI_ENTRY ptPTInstallDirectoryEntries[] =
 {
     {
@@ -2124,6 +2155,10 @@ MUI_PAGE ptPTPages[] =
         ptPTFormatPartitionEntries
     },
     {
+        CHECK_FILE_SYSTEM_PAGE,
+        ptPTCheckFSEntries
+    },
+    {
         DELETE_PARTITION_PAGE,
         ptPTDeletePartitionEntries
     },
@@ -2208,8 +2243,6 @@ MUI_STRING ptPTStrings[] =
     "A nova parti\207\306o ainda n\306o est\240 formatada."},
     {STRING_INSTALLONPART,
     "O instalador instala o ReactOS na parti\207\306o"},
-    {STRING_CHECKINGPART,
-    "O instalador est\240 a verificar a parti\207\306o seleccionada."},
     {STRING_CONTINUE,
     "ENTER=Continuar"},
     {STRING_QUITCONTINUE,
@@ -2261,31 +2294,21 @@ MUI_STRING ptPTStrings[] =
     {STRING_KEEPFORMAT,
     " Manter o sistema de arquivos actual (sem altera\207\344es) "},
     {STRING_HDINFOPARTCREATE_1,
-    "%I64u %s  Disco %lu  (Porta=%hu, Barramento=%hu, Id=%hu) em %wZ [%s]."},
-    {STRING_HDINFOPARTCREATE_2,
-    "%I64u %s  Disco %lu  (Porta=%hu, Barramento=%hu, Id=%hu) [%s]."},
-    {STRING_HDDINFOUNK2,
-    "   %c%c  Tipo 0x%02X    %I64u %s"},
+    "%s."},
     {STRING_HDINFOPARTDELETE_1,
-    "em %I64u %s  Disco %lu  (Porta=%hu, Barramento=%hu, Id=%hu) em %wZ [%s]."},
-    {STRING_HDINFOPARTDELETE_2,
-    "em %I64u %s  Disco %lu  (Porta=%hu, Barramento=%hu, Id=%hu) [%s]."},
-    {STRING_HDINFOPARTZEROED_1,
-    "Disco %lu (%I64u %s), Porta=%hu, Barramento=%hu, Id=%hu (%wZ) [%s]."},
-    {STRING_HDDINFOUNK4,
-    "%c%c  Tipo 0x%02X    %I64u %s"},
-    {STRING_HDINFOPARTEXISTS_1,
-    "em Disco %lu (%I64u %s), Porta=%hu, Barramento=%hu, Id=%hu (%wZ) [%s]."},
-    {STRING_HDDINFOUNK5,
-    "%c%c %c %sTipo %-3u%s                      %6lu %s"},
-    {STRING_HDINFOPARTSELECT_1,
-    "%6lu %s  Disco %lu  (Porta=%hu, Barramento=%hu, Id=%hu) em %wZ [%s]"},
-    {STRING_HDINFOPARTSELECT_2,
-    "%6lu %s  Disco %lu  (Porta=%hu, Barramento=%hu, Id=%hu) [%s]"},
+    "em %s."},
+    {STRING_PARTTYPE,
+    "Tipo 0x%02x"},
+    {STRING_HDDINFO_1,
+    // "Disco %lu (%I64u %s), Porta=%hu, Barramento=%hu, Id=%hu (%wZ) [%s]"
+    "%I64u %s Disco %lu (Porta=%hu, Barramento=%hu, Id=%hu) em %wZ [%s]"},
+    {STRING_HDDINFO_2,
+    // "Disco %lu (%I64u %s), Porta=%hu, Barramento=%hu, Id=%hu [%s]"
+    "%I64u %s Disco %lu (Porta=%hu, Barramento=%hu, Id=%hu) [%s]"},
     {STRING_NEWPARTITION,
     "O instalador criou uma nova parti\207\306o em"},
     {STRING_UNPSPACE,
-    "    %sEspa\207o n\306o particionado%s            %6lu %s"},
+    "Espa\207o n\306o particionado"},
     {STRING_MAXSIZE,
     "MB (max. %lu MB)"},
     {STRING_EXTENDED_PARTITION,

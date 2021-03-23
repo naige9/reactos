@@ -319,7 +319,7 @@ MiCheckVirtualAddress(IN PVOID VirtualAddress,
         }
 
         /* Return full access rights */
-        *ProtectCode = MM_READWRITE;
+        *ProtectCode = MM_EXECUTE_READWRITE;
         return NULL;
     }
     else if (MI_IS_SESSION_ADDRESS(VirtualAddress))
@@ -2099,7 +2099,7 @@ UserFault:
         /* Resolve a demand zero fault */
         MiResolveDemandZeroFault(PointerPpe,
                                  PointerPxe,
-                                 MM_READWRITE,
+                                 MM_EXECUTE_READWRITE,
                                  CurrentProcess,
                                  MM_NOIRQL);
 
@@ -2133,7 +2133,7 @@ UserFault:
         /* Resolve a demand zero fault */
         MiResolveDemandZeroFault(PointerPde,
                                  PointerPpe,
-                                 MM_READWRITE,
+                                 MM_EXECUTE_READWRITE,
                                  CurrentProcess,
                                  MM_NOIRQL);
 
@@ -2175,7 +2175,7 @@ UserFault:
         /* Resolve a demand zero fault */
         MiResolveDemandZeroFault(PointerPte,
                                  PointerPde,
-                                 MM_READWRITE,
+                                 MM_EXECUTE_READWRITE,
                                  CurrentProcess,
                                  MM_NOIRQL);
 #if MI_TRACE_PFNS
@@ -2262,12 +2262,13 @@ UserFault:
     }
 
     /* Quick check for demand-zero */
-    if (TempPte.u.Long == (MM_READWRITE << MM_PTE_SOFTWARE_PROTECTION_BITS))
+    if ((TempPte.u.Long == (MM_READWRITE << MM_PTE_SOFTWARE_PROTECTION_BITS)) ||
+        (TempPte.u.Long == (MM_EXECUTE_READWRITE << MM_PTE_SOFTWARE_PROTECTION_BITS)))
     {
         /* Resolve the fault */
         MiResolveDemandZeroFault(Address,
                                  PointerPte,
-                                 MM_READWRITE,
+                                 TempPte.u.Soft.Protection,
                                  CurrentProcess,
                                  MM_NOIRQL);
 
@@ -2338,7 +2339,7 @@ UserFault:
                 _WARN("This is probably completely broken!");
                 MI_WRITE_INVALID_PDE((PMMPDE)PointerPte, DemandZeroPde);
 #else
-                MI_WRITE_INVALID_PTE(PointerPte, DemandZeroPde);
+                MI_WRITE_INVALID_PDE(PointerPte, DemandZeroPde);
 #endif
             }
             else

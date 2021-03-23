@@ -1,7 +1,7 @@
 /*
  * COPYRIGHT:   See COPYING in the top level directory
  * PROJECT:     ReactOS WinSock 2 API
- * FILE:        dll/win32/ws2_32_new/src/dcatalog.c
+ * FILE:        dll/win32/ws2_32/src/dcatalog.c
  * PURPOSE:     Transport Catalog Object
  * PROGRAMMER:  Alex Ionescu (alex@relsoft.net)
  */
@@ -59,6 +59,17 @@ WsTcOpen(IN PTCATALOG Catalog,
                                 &RegType,
                                 NULL,
                                 &RegSize);
+    if (ErrorCode != ERROR_SUCCESS)
+    {
+        DPRINT1("Failed to get protocol catalog name: %d.\n", ErrorCode);
+        return FALSE;
+    }
+
+    if (RegType != REG_SZ)
+    {
+        DPRINT1("Protocol catalog name is not a string (Type %d).\n", RegType);
+        return FALSE;
+    }
 
     CatalogKeyName = HeapAlloc(WsSockHeap, 0, RegSize);
 

@@ -314,9 +314,8 @@
 #endif /* DEPRECATE_DDK_FUNCTIONS */
 
 /* Use to silence unused variable warnings when it is intentional */
-#define UNREFERENCED_PARAMETER(P) {(P)=(P);}
-#define UNREFERENCED_LOCAL_VARIABLE(L) ((void)(L))
-#define DBG_UNREFERENCED_PARAMETER(P) {(P)=(P);}
+#define UNREFERENCED_PARAMETER(P) ((void)(P))
+#define DBG_UNREFERENCED_PARAMETER(P) ((void)(P))
 #define DBG_UNREFERENCED_LOCAL_VARIABLE(L) ((void)(L))
 
 /* Void Pointers */
@@ -736,12 +735,12 @@ extern "C++" { \
 #define COMPILETIME_OR_5FLAGS(a,b,c,d,e)    ((UINT)(a)|(UINT)(b)|(UINT)(c)|(UINT)(d)|(UINT)(e))
 
 /* Type Limits */
-#define MINCHAR   0x80
-#define MAXCHAR   0x7f
-#define MINSHORT  0x8000
-#define MAXSHORT  0x7fff
-#define MINLONG   0x80000000
-#define MAXLONG   0x7fffffff
+#define MINCHAR   (-128)
+#define MAXCHAR   127
+#define MINSHORT  (-32768)
+#define MAXSHORT  32767
+#define MINLONG   (-2147483648)
+#define MAXLONG   2147483647
 $if(_NTDEF_)
 #define MAXUCHAR  0xff
 #define MAXUSHORT 0xffff

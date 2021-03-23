@@ -1223,6 +1223,37 @@ static MUI_ENTRY huHUFormatPartitionEntries[] =
     }
 };
 
+static MUI_ENTRY huHUCheckFSEntries[] =
+{
+    {
+        4,
+        3,
+        " ReactOS " KERNEL_VERSION_STR " telep\241t\213 ",
+        TEXT_STYLE_UNDERLINE,
+        TEXT_ID_STATIC
+    },
+    {
+        6,
+        8,
+        "A telep\241t\213 most ellen\213rzi a kijel\224lt part\241ci\242t.",
+        TEXT_STYLE_NORMAL,
+        TEXT_ID_STATIC
+    },
+    {
+        0,
+        0,
+        "K\202rem v\240rjon...",
+        TEXT_TYPE_STATUS | TEXT_PADDING_BIG,
+        TEXT_ID_STATIC
+    },
+    {
+        0,
+        0,
+        NULL,
+        0
+    }
+};
+
 static MUI_ENTRY huHUInstallDirectoryEntries[] =
 {
     {
@@ -1992,6 +2023,10 @@ MUI_PAGE huHUPages[] =
         huHUFormatPartitionEntries
     },
     {
+        CHECK_FILE_SYSTEM_PAGE,
+        huHUCheckFSEntries
+    },
+    {
         DELETE_PARTITION_PAGE,
         huHUDeletePartitionEntries
     },
@@ -2075,8 +2110,6 @@ MUI_STRING huHUStrings[] =
     "Az \243j part\241ci\242 m\202g nincs form\240zva."},
     {STRING_INSTALLONPART,
     "A telep\241t\213 az al\240bbi part\241ci\242ra telep\241ti a ReactOS-t:"},
-    {STRING_CHECKINGPART,
-    "A telep\241t\213 most ellen\213rzi a kijel\224lt part\241ci\242t."},
     {STRING_CONTINUE,
     "ENTER = Folytat\240s"},
     {STRING_QUITCONTINUE,
@@ -2128,31 +2161,21 @@ MUI_STRING huHUStrings[] =
     {STRING_KEEPFORMAT,
     " Jelenlegi f\240jlrendszer megtart\240sa (nincs v\240ltoztat\240s) "},
     {STRING_HDINFOPARTCREATE_1,
-    "%I64u %s  %lu. merevlemez  (Port=%hu, Bus=%hu, Id=%hu) itt: %wZ [%s]."},
-    {STRING_HDINFOPARTCREATE_2,
-    "%I64u %s  %lu. merevlemez  (Port=%hu, Bus=%hu, Id=%hu) [%s]."},
-    {STRING_HDDINFOUNK2,
-    "   %c%c  Type 0x%02X    %I64u %s"},
+    "%s."},
     {STRING_HDINFOPARTDELETE_1,
-    "itt: %I64u %s  %lu. merevlemez  (Port=%hu, Bus=%hu, Id=%hu) itt: %wZ [%s]."},
-    {STRING_HDINFOPARTDELETE_2,
-    "itt: %I64u %s  %lu. merevlemez  (Port=%hu, Bus=%hu, Id=%hu) [%s]."},
-    {STRING_HDINFOPARTZEROED_1,
-    "%lu. merevlemez (%I64u %s), Port=%hu, Bus=%hu, Id=%hu (%wZ) [%s]."},
-    {STRING_HDDINFOUNK4,
-    "%c%c  Type 0x%02X    %I64u %s"},
-    {STRING_HDINFOPARTEXISTS_1,
-    "a %lu. merevlemezre (%I64u %s), Port=%hu, Bus=%hu, Id=%hu (%wZ) [%s]."},
-    {STRING_HDDINFOUNK5,
-    "%c%c %c %sType %-3u%s                      %6lu %s"},
-    {STRING_HDINFOPARTSELECT_1,
-    "%6lu %s  %lu. merevlemez  (Port=%hu, Bus=%hu, Id=%hu) itt: %wZ [%s]"},
-    {STRING_HDINFOPARTSELECT_2,
-    "%6lu %s  %lu. merevlemez  (Port=%hu, Bus=%hu, Id=%hu) [%s]"},
+    "itt: %s."},
+    {STRING_PARTTYPE,
+    "Type 0x%02x"},
+    {STRING_HDDINFO_1,
+    // "%lu. merevlemez (%I64u %s), Port=%hu, Bus=%hu, Id=%hu (%wZ) [%s]"
+    "%I64u %s %lu. merevlemez (Port=%hu, Bus=%hu, Id=%hu) itt: %wZ [%s]"},
+    {STRING_HDDINFO_2,
+    // "%lu. merevlemez (%I64u %s), Port=%hu, Bus=%hu, Id=%hu [%s]"
+    "%I64u %s %lu. merevlemez (Port=%hu, Bus=%hu, Id=%hu) [%s]"},
     {STRING_NEWPARTITION,
     "A telep\241t\213 egy \243j part\241ci\242t hozott l\202tre itt:"},
     {STRING_UNPSPACE,
-    "    %sNem particion\240lt ter\201let%s           %6lu %s"},
+    "Nem particion\240lt ter\201let"},
     {STRING_MAXSIZE,
     "MB (max. %lu MB)"},
     {STRING_EXTENDED_PARTITION,

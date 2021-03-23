@@ -1,7 +1,7 @@
 /*
  * COPYRIGHT:   See COPYING in the top level directory
  * PROJECT:     ReactOS WinSock 2 API
- * FILE:        dll/win32/ws2_32_new/src/nscatalo.c
+ * FILE:        dll/win32/ws2_32/src/nscatalo.c
  * PURPOSE:     Namespace Catalog Object
  * PROGRAMMER:  Alex Ionescu (alex@relsoft.net)
  */
@@ -58,6 +58,17 @@ WsNcOpen(IN PNSCATALOG Catalog,
                                 &RegType,
                                 NULL,
                                 &RegSize);
+    if (ErrorCode != ERROR_SUCCESS)
+    {
+        DPRINT1("Failed to get namespace catalog name: %d.\n", ErrorCode);
+        return FALSE;
+    }
+
+    if (RegType != REG_SZ)
+    {
+        DPRINT1("Namespace catalog name is not a string (Type %d).\n", RegType);
+        return FALSE;
+    }
 
     CatalogKeyName = HeapAlloc(WsSockHeap, 0, RegSize);
 
